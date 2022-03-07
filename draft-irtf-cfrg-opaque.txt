@@ -5,12 +5,12 @@
 Network Working Group                                        D. Bourdrez
 Internet-Draft                                                          
 Intended status: Informational                               H. Krawczyk
-Expires: 18 August 2022                              Algorand Foundation
+Expires: 8 September 2022                            Algorand Foundation
                                                                  K. Lewi
                                                            Novi Research
-                                                               C.A. Wood
+                                                              C. A. Wood
                                                         Cloudflare, Inc.
-                                                        14 February 2022
+                                                            7 March 2022
 
 
                   The OPAQUE Asymmetric PAKE Protocol
@@ -49,7 +49,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 18 August 2022.
+   This Internet-Draft will expire on 8 September 2022.
 
 Copyright Notice
 
@@ -2147,7 +2147,7 @@ def Response(server_identity, server_private_key, client_identity,
               paradigm for cryptographic protocols", IEEE Symposium on
               Foundations of Computer Science (FOCS) , 2001.
 
-   [Cheon06]  Cheon, J.H., "Security analysis of the strong Diffie-
+   [Cheon06]  Cheon, J. H., "Security analysis of the strong Diffie-
               Hellman problem", Euroctypt 2006 , 2006.
 
    [FIPS202]  National Institute of Standards and Technology (NIST),
@@ -2156,10 +2156,11 @@ def Response(server_identity, server_private_key, client_identity,
               <https://nvlpubs.nist.gov/nistpubs/FIPS/
               NIST.FIPS.202.pdf>.
 
-   [FK00]     Ford, W. and B.S. Kaliski, Jr, "Server-assisted generation
-              of a strong secret from a password", WETICE , 2000.
+   [FK00]     Ford, W. and B. S. Kaliski, Jr, "Server-assisted
+              generation of a strong secret from a password", WETICE ,
+              2000.
 
-   [GMR06]    Gentry, C., MacKenzie, P., and . Z, Ramzan, "A method for
+   [GMR06]    Gentry, C., MacKenzie, P., and Z, Ramzan, "A method for
               making password-based key exchange resilient to server
               compromise", CRYPTO , 2006.
 
@@ -2170,9 +2171,9 @@ def Response(server_identity, server_private_key, client_identity,
               Faz-Hernandez, A., Scott, S., Sullivan, N., Wahby, R. S.,
               and C. A. Wood, "Hashing to Elliptic Curves", Work in
               Progress, Internet-Draft, draft-irtf-cfrg-hash-to-curve-
-              13, 10 November 2021,
+              14, 18 February 2022,
               <https://datatracker.ietf.org/doc/html/draft-irtf-cfrg-
-              hash-to-curve-13>.
+              hash-to-curve-14>.
 
    [I-D.krawczyk-cfrg-opaque-03]
               "The OPAQUE Asymmetric PAKE Protocol", n.d.,
@@ -2918,23 +2919,19 @@ D.2.2.3.  Output Values
 Authors' Addresses
 
    Daniel Bourdrez
-
    Email: d@bytema.re
 
 
    Hugo Krawczyk
    Algorand Foundation
-
    Email: hugokraw@gmail.com
 
 
    Kevin Lewi
    Novi Research
-
    Email: lewi.kevin.k@gmail.com
 
 
    Christopher A. Wood
    Cloudflare, Inc.
-
    Email: caw@heapingbits.net
