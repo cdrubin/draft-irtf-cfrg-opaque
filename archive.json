@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2022-03-03T01:18:03.637623+00:00",
+  "timestamp": "2022-03-08T01:13:14.664329+00:00",
   "repo": "cfrg/draft-irtf-cfrg-opaque",
   "labels": [
     {
@@ -7405,9 +7405,17 @@
       "labels": [],
       "body": "[Paragraph 1 of section 5](https://www.ietf.org/archive/id/draft-irtf-cfrg-opaque-07.html#section-5-1) states that the same keypair can be used with multiple clients and different OPRF seeds can be used for each client.\r\n\r\nWhereas [section 5.3](https://www.ietf.org/archive/id/draft-irtf-cfrg-opaque-07.html#name-finalize-registration) states that different keypairs can be used with each client and the same OPRF seed SHOULD be used for all clients.\r\n\r\nThis seems to be a bit confusing, it might be worth clarifying this in both places in the spec.",
       "createdAt": "2022-03-01T19:52:01Z",
-      "updatedAt": "2022-03-01T19:52:01Z",
+      "updatedAt": "2022-03-06T18:02:45Z",
       "closedAt": null,
-      "comments": []
+      "comments": [
+        {
+          "author": "bytemare",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Hi James,\n\nIndeed, the server can either use unique AKE key pairs for each client, or for a subset, or the same for all of them. They point is to associate that key pair with the client as to use the right one during execution.\n\nThe OPRF key _can_ be the same or different for each client. Since it is mixed with the client id when used, a unique per client OPRF key is derived, whatever the seed is. This document specifies a method where the seed is global.\n\nReading your comment and then the sections I agree that this might be confusing. Do you have a suggestion to make this clearer ?",
+          "createdAt": "2022-03-06T18:02:45Z",
+          "updatedAt": "2022-03-06T18:02:45Z"
+        }
+      ]
     }
   ],
   "pulls": [
@@ -26751,24 +26759,26 @@
       "id": "PR_kwDOD79ejs4y8tYI",
       "title": "Plumb fixed randomness into each test vector.",
       "url": "https://github.com/cfrg/draft-irtf-cfrg-opaque/pull/344",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "chris-wood",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "This change ensures that each test vector is run with the same fixed seed that is used to initialize a randomness seed that's distinct for each client and server. (Client and server share the same randomness during registration, but we can easily change that if desired.) We can also use a different seed for each test vector if desired.\r\n\r\ncc @stef, @armfazh ",
       "createdAt": "2022-02-16T19:53:23Z",
-      "updatedAt": "2022-02-18T02:02:02Z",
+      "updatedAt": "2022-03-07T15:36:53Z",
       "baseRepository": "cfrg/draft-irtf-cfrg-opaque",
       "baseRefName": "master",
       "baseRefOid": "160b19931b97308c4d571269de95ba6167f1b7f2",
       "headRepository": "cfrg/draft-irtf-cfrg-opaque",
       "headRefName": "caw/fix-test-vector-randomness",
       "headRefOid": "c8f858d015836ea555543611fa845fe128264653",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "closedAt": "2022-03-07T15:36:52Z",
+      "mergedAt": "2022-03-07T15:36:52Z",
+      "mergedBy": "chris-wood",
+      "mergeCommit": {
+        "oid": "661eff66d932255195802ff3dca6ba40edb12f19"
+      },
       "comments": [
         {
           "author": "armfazh",
