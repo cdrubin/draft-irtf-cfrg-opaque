@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2022-03-08T01:13:14.664329+00:00",
+  "timestamp": "2022-03-10T01:21:04.697816+00:00",
   "repo": "cfrg/draft-irtf-cfrg-opaque",
   "labels": [
     {
@@ -7405,15 +7405,22 @@
       "labels": [],
       "body": "[Paragraph 1 of section 5](https://www.ietf.org/archive/id/draft-irtf-cfrg-opaque-07.html#section-5-1) states that the same keypair can be used with multiple clients and different OPRF seeds can be used for each client.\r\n\r\nWhereas [section 5.3](https://www.ietf.org/archive/id/draft-irtf-cfrg-opaque-07.html#name-finalize-registration) states that different keypairs can be used with each client and the same OPRF seed SHOULD be used for all clients.\r\n\r\nThis seems to be a bit confusing, it might be worth clarifying this in both places in the spec.",
       "createdAt": "2022-03-01T19:52:01Z",
-      "updatedAt": "2022-03-06T18:02:45Z",
+      "updatedAt": "2022-03-08T22:03:25Z",
       "closedAt": null,
       "comments": [
         {
           "author": "bytemare",
           "authorAssociation": "COLLABORATOR",
-          "body": "Hi James,\n\nIndeed, the server can either use unique AKE key pairs for each client, or for a subset, or the same for all of them. They point is to associate that key pair with the client as to use the right one during execution.\n\nThe OPRF key _can_ be the same or different for each client. Since it is mixed with the client id when used, a unique per client OPRF key is derived, whatever the seed is. This document specifies a method where the seed is global.\n\nReading your comment and then the sections I agree that this might be confusing. Do you have a suggestion to make this clearer ?",
+          "body": "Hi James,\n\nIndeed, the server can either use unique AKE key pairs for each client, or for a subset, or the same for all of them. They point is to associate that key pair with the client as to use the right one during execution.\n\nThe OPRF seed _can_ be the same or different for each client. Since it is mixed with the client id when used, a unique per client OPRF key is derived, whatever the seed is. This document specifies a method where the seed is global.\n\nReading your comment and then the sections I agree that this might be confusing. Do you have a suggestion to make this clearer ?",
           "createdAt": "2022-03-06T18:02:45Z",
-          "updatedAt": "2022-03-06T18:02:45Z"
+          "updatedAt": "2022-03-08T22:03:25Z"
+        },
+        {
+          "author": "jamesw1892",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "Hi Daniel,\r\n\r\nThanks for your response, that clarifies things. I don't have any specific suggestions, maybe just say something like:\r\n\r\n\"While a different OPRF seed can be used for each client, the same OPRF seed may as well be used for all clients since regardless, a unique OPRF key will be derived for each client using it.\"\r\n\r\nAnd something exactly like what you said for AKE keypairs.",
+          "createdAt": "2022-03-08T22:01:18Z",
+          "updatedAt": "2022-03-08T22:01:18Z"
         }
       ]
     }
