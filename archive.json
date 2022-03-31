@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2022-03-10T01:21:04.697816+00:00",
+  "timestamp": "2022-03-31T01:34:58.143428+00:00",
   "repo": "cfrg/draft-irtf-cfrg-opaque",
   "labels": [
     {
@@ -7358,15 +7358,15 @@
       "id": "I_kwDOD79ejs5DTeT_",
       "title": "include metadata about MHF in envelope",
       "url": "https://github.com/cfrg/draft-irtf-cfrg-opaque/issues/337",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "armfazh",
       "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
       "labels": [],
       "body": "currently the memory hard function (MHF) and its parameters are hard-coded in the ciphersuite, however if a user wants to use a different MHF, it would be possible to made parameters available as part of envelope's metadata.\r\n\r\ncc: @evanderkoogh , who may want to add more comments.",
       "createdAt": "2022-02-09T23:21:28Z",
-      "updatedAt": "2022-02-10T01:50:37Z",
-      "closedAt": null,
+      "updatedAt": "2022-03-29T09:35:57Z",
+      "closedAt": "2022-03-29T09:35:57Z",
       "comments": [
         {
           "author": "chris-wood",
@@ -7374,6 +7374,13 @@
           "body": "We've discussed this in the past and concluded that supporting negotiation of key stretching parameters via the envelope is not worth the complexity. (I don't have the relevant issue at hand, but we could probably dig it up.) Another complicating factor is that there's no registry for key stretching algorithms, so this would require us to introduce one.",
           "createdAt": "2022-02-10T01:50:37Z",
           "updatedAt": "2022-02-10T01:50:37Z"
+        },
+        {
+          "author": "kevinlewi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "See https://github.com/cfrg/draft-irtf-cfrg-opaque/issues/69 which contains the aforementioned discussion. Closing this issue but feel free to reopen if there are new points to be made!",
+          "createdAt": "2022-03-29T09:35:57Z",
+          "updatedAt": "2022-03-29T09:35:57Z"
         }
       ]
     },
@@ -7389,9 +7396,73 @@
       "labels": [],
       "body": "```\r\ndef ServerFinish(ke3):\r\n  if !ct_equal(ke3.client_mac, state.expected_client_mac):\r\n```\r\neach run of the protocol must use different macs anyway, so if an attacker learn how many bytes they managed to match, does not help them at all.\r\n\r\nalso i was wondering i saw, that in contrast to earlier variants, now the session key is only considered valid if this check is successful, but the paper and earlier drafts also allowed for implicit authentication in case the session key is used for setting up an encrypted channel for example, what happened to that? ",
       "createdAt": "2022-02-14T02:40:40Z",
-      "updatedAt": "2022-02-14T02:40:40Z",
+      "updatedAt": "2022-03-30T09:39:54Z",
       "closedAt": null,
-      "comments": []
+      "comments": [
+        {
+          "author": "kevinlewi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "cc: @hugokraw in case he can help with answering about:\r\n1) the necessity for the constant-time mac checks here, and\r\n2) considering the session key as valid only if this mac check succeeds.",
+          "createdAt": "2022-03-29T09:31:54Z",
+          "updatedAt": "2022-03-29T09:31:54Z"
+        },
+        {
+          "author": "stef",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "thx for reviving this",
+          "createdAt": "2022-03-29T11:14:07Z",
+          "updatedAt": "2022-03-29T11:14:07Z"
+        },
+        {
+          "author": "hugokraw",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Stef is right that the MAC in the KE protocol (particularly 3DH) is \"one time\" in the sense that the MAC key is used only for this particular run of the protocol so there is no need to protect the key for repeated/long-term uses.\r\nHe is also right that if you forgo the check of the MAC, the session key is still implicit authenticated. MAC verification does provide value in the form of explicit authentication, key confirmation and forward security against active attackers. If you don't need these properties the KE protocol is still secure without the MAC.",
+          "createdAt": "2022-03-29T17:08:59Z",
+          "updatedAt": "2022-03-29T17:08:59Z"
+        },
+        {
+          "author": "kevinlewi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Thanks for chiming in @hugokraw!\r\n\r\n@stef: Is your question mainly out of curiosity, or are you proposing that the requirements for the specification be changed to not require this mac check to be constant-time?\r\n\r\nIt seems to me that since implementations already have to make constant-time checks in other parts of the protocol, and so the cost/burden of doing this for the mac check is negligible, even if it is extraneous. So I would advocate for still keeping the constant-time requirement in there for simplicity of exposition.\r\n\r\nOr alternatively, we could add a small note saying that this last check isn't required to be in constant-time, into the draft text.\r\n\r\n",
+          "createdAt": "2022-03-29T21:20:33Z",
+          "updatedAt": "2022-03-29T21:20:33Z"
+        },
+        {
+          "author": "bytemare",
+          "authorAssociation": "COLLABORATOR",
+          "body": "The argument is indeed valid, but I would advocate to follow best practices as much as possible, more so when costs are negligible.\n\nI agree that Hugo's points could indeed be added to the text, and we add some prose to make the use case abundantly clear :)",
+          "createdAt": "2022-03-29T21:54:44Z",
+          "updatedAt": "2022-03-29T21:54:44Z"
+        },
+        {
+          "author": "stef",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "> @stef: Is your question mainly out of curiosity, or are you proposing that the requirements for the specification be changed to not require this mac check to be constant-time?\r\n\r\ni'm sorry, for mixing up two things:\r\n\r\n1/ yes the constant timeness of the check is just out of curiosity, since i noticed it is unnecessary i just wanted it to be confirmed if i'm right about this.\r\n\r\n2/ the question if the mac is necessary at all is another one. and that is less out of curiosity. without the mac, an attacker can check for correctness by checking the mac, without the mac, an attacker needs (at least) one more step to confirm the success of a guess at a correct password. and in some cases i think that is actually a good thing that improves security of the password. which is weird, not doing a mac having a positive effect. but i guess it's similar to having a mac of the plaintext of some otp encrypted message, it reduces the security level from information theoretic to computational. at least that is what i was thinking, maybe i'm wrong.",
+          "createdAt": "2022-03-29T22:49:43Z",
+          "updatedAt": "2022-03-29T22:49:43Z"
+        },
+        {
+          "author": "stef",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "actually i'm not quite sure about this anymore it was quite some time ago i was wondering about this and i might not get all things right anymore regarding 2/.",
+          "createdAt": "2022-03-29T22:51:38Z",
+          "updatedAt": "2022-03-29T22:51:38Z"
+        },
+        {
+          "author": "hugokraw",
+          "authorAssociation": "COLLABORATOR",
+          "body": "In OPAQUE, the attacker learns if it guessed the password correctly by verifying the MAC computed on the envelope so omitting the server's MAC from the key exchange does not help.",
+          "createdAt": "2022-03-29T23:27:35Z",
+          "updatedAt": "2022-03-29T23:27:35Z"
+        },
+        {
+          "author": "stef",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "uh. thank you for this lesson. /o\\",
+          "createdAt": "2022-03-30T09:39:54Z",
+          "updatedAt": "2022-03-30T09:39:54Z"
+        }
+      ]
     },
     {
       "number": 346,
