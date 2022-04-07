@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2022-03-31T01:34:58.143428+00:00",
+  "timestamp": "2022-04-07T01:27:05.505943+00:00",
   "repo": "cfrg/draft-irtf-cfrg-opaque",
   "labels": [
     {
@@ -5634,7 +5634,7 @@
       "id": "MDU6SXNzdWU5NjMwNTIwMzk=",
       "title": "Protect the client record with a KEM on registration",
       "url": "https://github.com/cfrg/draft-irtf-cfrg-opaque/issues/240",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "bytemare",
       "authorAssociation": "COLLABORATOR",
       "assignees": [
@@ -5643,8 +5643,8 @@
       "labels": [],
       "body": "Currently, the client sends a masking key during registration for the server to obfuscate login messages and protect against client enumeration. This relatively sensitive and secret piece of data requires the full registration to be \"secure\" with integrity, authenticity, and confidentiality, as offered by TLS for example.\r\n\r\nIntegrity and authenticity cannot be subverted once the session is over and past. Confidentiality, however, is not ensured if encryption keys are backed up, shared, or leaked, and allows decryption after the session (e.g. proxy re-encryption, logging, legal compliance, etc.). The masking key is at risk of being revealed to a passive (even non-malicious) attacker after registration has happened.\r\n\r\nThis risk can be avoided by using a KEM to protect the last registration message from the client to the server. Implementations could leverage the fact the client gets the server public key in the registration response and use symmetric encryption using a basic KEM. We could either build it into OPAQUE (not that expensive, as it happens only once) or add it to the security considerations.",
       "createdAt": "2021-08-06T21:18:50Z",
-      "updatedAt": "2021-10-05T13:12:01Z",
-      "closedAt": null,
+      "updatedAt": "2022-04-05T21:25:36Z",
+      "closedAt": "2022-04-05T21:25:36Z",
       "comments": [
         {
           "author": "bytemare",
@@ -5666,6 +5666,13 @@
           "body": "Alright \ud83d\udc4d ",
           "createdAt": "2021-10-05T13:12:01Z",
           "updatedAt": "2021-10-05T13:12:01Z"
+        },
+        {
+          "author": "bytemare",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Let's fold this into #310 ",
+          "createdAt": "2022-04-05T21:25:35Z",
+          "updatedAt": "2022-04-05T21:25:35Z"
         }
       ]
     },
@@ -6222,7 +6229,7 @@
       ],
       "body": "The protocol's complexity has reached a point where it gets easy to be confused. Flowcharts of components and the complete protocol could help the new reader with a quick overview and better understanding.\r\n\r\n- [x] Registration - Client side\r\n- [x] Registration - Server side\r\n- [x] Login - Client side\r\n- [x] Login - Server",
       "createdAt": "2021-08-26T15:43:40Z",
-      "updatedAt": "2021-10-13T16:54:39Z",
+      "updatedAt": "2022-04-05T21:31:19Z",
       "closedAt": null,
       "comments": [
         {
@@ -6238,6 +6245,13 @@
           "body": "This is my proposal for the flowcharts\r\n\r\n## Registration client\r\n\r\n```\r\n                         | ID  | Password\r\n                         |     |\r\n                         |     v\r\n                         |   +---------+\r\n                         |   | OPRF    |\r\n                         |   | Blind() |\r\n                         |   +-------+-+\r\n                         v       OPRF-1|  \r\nSend Request to server +---------+ <---+\r\n                  <--- + Request |        \r\n                       +---------+\r\n\r\nReceive Response from server\r\n        +----------+     \r\n   ---> + Response |--+--------+\r\n        +----------+  |        | OPRF-2\r\n                      |        v\r\n                      |     +-----------+\r\n                      |     | OPRF      |\r\n                      |     | Unblind() |\r\n                      |     +----+------+\r\n                      |         |\r\n                      |         | OPRF\r\n                      |         v Output\r\n                      |     +----------+\r\n                      |     | Harden() |\r\n                      |     +---+------+\r\n                      |       |\r\n                      |       | randomized_pwd\r\n                      |       v\r\n                      | pks  +---------+\r\n                      +----> | Store() |\r\n                             ++-------++\r\n                              |       |\r\n                          pkc |       |\r\n                     envelope |       |\r\n                  masking_key |       |\r\n                              |       |\r\nSend Record to server         v       |\r\n                        +--------+    |\r\n                  <---- + Record |    |\r\n                        +--------+    |\r\n                                      v\r\n                                 Export Key\r\n```\r\n\r\n## Registration server\r\n\r\n```                            \r\n| Server Public Key       Receive Request from client\r\n|                                 +-----+     \r\n|        +------------------------+ KE1 | <---\r\n|        |                    |   +-----+\r\n|        | ID                 | OPRF-1     \r\n|        v                    |          \r\n|  +-------------+            |          \r\n|  | User Lookup |            |          \r\n|  +-+-----------+            |\r\n|    |                        |\r\n|    | oprf_seed              |\r\n|    | credential_identifier  |\r\n|    |                        v\r\n|    |                  +-----------+    \r\n|    +----------------> | OPRF      |    \r\n|                       | Evaluate()|    \r\n|                       +-----+-----+\r\n|                             |\r\n|                             | OPRF-2  \r\n|                             v          \r\n|                     +----------+ Send Response to client\r\n+-------------------> | Response + ---> \r\n                      +----------+\r\n\r\n             Receive and store Record from client\r\n                      +--------+     \r\n                      + Record | <---\r\n                      +--------+\r\n```\r\n\r\n## Login client\r\n\r\n```\r\n                     | ID     | Password\r\n                     |        |\r\n                     |        v\r\n                     |   +---------+ +---------+\r\n                     |   | OPRF    | | AKE     |\r\n                     |   | Blind() | | Start() |\r\n                     |   +-------+-+ +----+----+\r\n                     v       OPRF-1|        |\r\nSend KE1 to server   +-----+ <-----+        |\r\n              <----- + KE1 |         AKE-1  |\r\n                     +-----+ <--------------+\r\n\r\nReceive KE2 from server\r\n          +-----+     \r\n     ---> + KE2 |---+---+-----------------+\r\n          +-----+   |   |                 | OPRF-2\r\n                    |   |                 v\r\n                    |   |            +-----------+\r\n                    |   |            | OPRF      |\r\n                    |   |            | Unblind() |\r\n                    |   | Masking    +----+------+\r\n                    |   | - nonce         |\r\n                    |   | - response      | OPRF output\r\n                    |   |                 v \r\n                    |   |             +----------+\r\n                    |   |             | Harden() |\r\n                    |   v             +---+------+\r\n                    | +--------+        |\r\n                    | | Unmask | <------+ randomized_pwd\r\n                    | +-+------+        |\r\n                    |   |               |\r\n                    |   | pks           |\r\n                    |   | Envelope      v\r\n                    |   +------------> +----------+\r\n                    |                  | Key      |\r\n                    | AKE-2            | Recovery |\r\n                    +--------------->  ++--------++\r\n                                         |        |\r\n                                         | skc    |\r\n                                         | pkc    |\r\n                                         v        |\r\nSend KE1 to server  +-----+   AKE-3  +----------+ |\r\n              <---- + KE3 | <--------+ AKE      | |\r\n                    +-----+          | Finish() | |\r\n                                     +-+--------+ |\r\n                                       |          |\r\n                                       v          v\r\n                                Session Key  Export Key\r\n```\r\n\r\n## Login server\r\n\r\n```                            \r\n| Private and Public Keys       Receive KE1 from client\r\n|                                             +-----+     \r\n| +----------+-----------------------+------- + KE1 | <---\r\n| |          |                       |        +-----+\r\n| | AKE-1    | ID                    | OPRF-1     \r\n| |          v                       |          \r\n| |   +-------------+                |          \r\n| |   | User Lookup |                |          \r\n| |   ++-+-+--------+                |\r\n| |    | | |                         v\r\n| |    | | | oprf_seed              +-----------+    \r\n| |    | | | credential_identifier  | OPRF      |    \r\n| |    | | +----------------------> | Evaluate()|    \r\n| |    | |                          ++----------+\r\n| |    | |                           |\r\n| |    | |                           | OPRF-2  \r\n| |    | |                           v          \r\n| |    | | Envelope         +------------+  \r\n| |    | +----------------> | Credential |  \r\n| |    |                    | Response   |  \r\n| |    | pkc                +--------+---+  \r\n| |    v                        |     \r\n| |   +------------+            v    \r\n| +-> | AKE        | AKE-2   +-----+ Send KE2 to client\r\n|     | Response() +-------> | KE2 + --->\r\n+---> +------------+         +-----+  \r\n                                    \r\n                                Receive KE3 from client\r\n           +---------+      +-----+     \r\n           | AKE     | <--- + KE3 | <---\r\n           | Finish()|      +-----+\r\n           +----+----+              \r\n                |                   \r\n                v                   \r\n         Session Key\r\n```\r\n\r\n",
           "createdAt": "2021-10-13T16:54:39Z",
           "updatedAt": "2021-10-13T16:54:39Z"
+        },
+        {
+          "author": "bytemare",
+          "authorAssociation": "COLLABORATOR",
+          "body": "As discussed with @kevinlewi, we should probably add these at a later stage when we feel we reached something stable, so as to not have to update these graphs if components evolve.",
+          "createdAt": "2022-04-05T21:31:19Z",
+          "updatedAt": "2022-04-05T21:31:19Z"
         }
       ]
     },
@@ -6728,13 +6742,15 @@
       "state": "OPEN",
       "author": "armfazh",
       "authorAssociation": "CONTRIBUTOR",
-      "assignees": [],
+      "assignees": [
+        "kevinlewi"
+      ],
       "labels": [
         "next-version"
       ],
       "body": "Currently the state is vaguely specified. Specification must be clearer in what is the content of the state. \r\n(this may need some minor fixes, but still needs to be addressed).\r\n\r\nRaised after:\r\n\r\n_Originally posted by @chris-wood in https://github.com/cfrg/draft-irtf-cfrg-opaque/pull/286#discussion_r751669794_",
       "createdAt": "2021-11-18T18:50:33Z",
-      "updatedAt": "2022-02-02T14:26:29Z",
+      "updatedAt": "2022-04-05T23:07:08Z",
       "closedAt": null,
       "comments": [
         {
@@ -6757,6 +6773,20 @@
           "body": "We only need to specify the structure of protocol messages, not implementation specific structures and related state. Using standard OO (dot style) notation for this state seems most clear.",
           "createdAt": "2021-12-01T00:07:00Z",
           "updatedAt": "2021-12-01T00:07:00Z"
+        },
+        {
+          "author": "kevinlewi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "I would be in favor of removing the mentioning of these states altogether, and to just push the modification of these states into the inputs and outputs for each function. That way, each function can be seen as stateless.",
+          "createdAt": "2022-04-05T21:41:24Z",
+          "updatedAt": "2022-04-05T21:41:24Z"
+        },
+        {
+          "author": "chris-wood",
+          "authorAssociation": "COLLABORATOR",
+          "body": "@kevinlewi I think we'll find that the parameter list for these functions will grow to an unreadably large size, but it's worth removing all mentions of state to at least see how it looks!",
+          "createdAt": "2022-04-05T23:07:08Z",
+          "updatedAt": "2022-04-05T23:07:08Z"
         }
       ]
     },
@@ -6765,15 +6795,15 @@
       "id": "I_kwDOD79ejs5ALio6",
       "title": "Update algorithm",
       "url": "https://github.com/cfrg/draft-irtf-cfrg-opaque/issues/294",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "daxpedda",
-      "authorAssociation": "NONE",
+      "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
       "labels": [],
       "body": "Re-hashing is sometimes practiced with traditional password hashing mechanisms. The main concern here is that when a user doesn't log-in for years, it prevents the server from updating the algorithm used to hash the password, which can only be done when the user logs in again.\r\n\r\nThe solution is usually to re-hash hashes, basically wrap hashes in another hash, on client authentication both hash's have to be performed, afterwards the hash can be updated.\r\n\r\nObviously that isn't really possible with OPAQUE, as we don't actually store a hash. The `RegistrationUpload` is secured by the `server_private_key` instead.\r\n\r\nI also noticed, that the only recommendation what to do in the event of server compromise in the draft, is to also resample the `oprf_seed`.\r\n\r\nSo I was thinking that we can kill two birds with one stone, if we can specify a mechanism to update the `RegistrationUpload` by using a new (and stronger) `server_private_key`, we have provided a mechanism to allow upgrading `RegistrationUpload` to newer algorithms and also provide a (hopefully) good response tactic if the `server_private_key` is compromised.\r\n\r\nWarning: I'm no cryptographer and only have a surface-level understanding of everything I'm talking about here!",
       "createdAt": "2021-12-10T11:54:17Z",
-      "updatedAt": "2022-01-07T13:54:01Z",
-      "closedAt": null,
+      "updatedAt": "2022-04-06T16:19:03Z",
+      "closedAt": "2022-04-05T21:49:44Z",
       "comments": [
         {
           "author": "bytemare",
@@ -6784,7 +6814,7 @@
         },
         {
           "author": "daxpedda",
-          "authorAssociation": "NONE",
+          "authorAssociation": "CONTRIBUTOR",
           "body": "I don't, but I plan to look into it.\r\n\r\nThinking about this more, we may want to open a separate issue addressing what is actually compromised and what attack vectors this would open up if the `server_private_key` or `oprf_seed` or both are compromised.",
           "createdAt": "2021-12-19T13:48:23Z",
           "updatedAt": "2021-12-19T13:48:23Z"
@@ -6795,6 +6825,20 @@
           "body": "cc @hugokraw for his thoughts",
           "createdAt": "2022-01-07T13:54:01Z",
           "updatedAt": "2022-01-07T13:54:01Z"
+        },
+        {
+          "author": "kevinlewi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "I think this feature would be nice to have, but is almost certainly not supported by OPAQUE, since it is not as simple as \"password onion hashing\" (tacking on stronger hashing algorithms). Instead, implementers should consider a migration from an old `server_private_key` or `oprf_seed` to a newer one upon future client login, by re-running the registration protocol with the new key material.\r\n\r\nAt any rate, I believe this is outside of the scope of the specification.",
+          "createdAt": "2022-04-05T21:49:44Z",
+          "updatedAt": "2022-04-05T21:49:44Z"
+        },
+        {
+          "author": "hugokraw",
+          "authorAssociation": "COLLABORATOR",
+          "body": "I haven't seen this before (if you ask for my feedback and I don't respond it is good to ping me...). I think that the solution in all these cases is to let the user login with the old parameters, then reset the password and re-run registration with the new keys and/or mechanisms. If the old parameters are not available or compromised one can reset the password without a login.  Measures against user enumeration may be required for this process too.",
+          "createdAt": "2022-04-06T16:19:03Z",
+          "updatedAt": "2022-04-06T16:19:03Z"
         }
       ]
     },
@@ -7060,11 +7104,13 @@
       "state": "OPEN",
       "author": "bytemare",
       "authorAssociation": "COLLABORATOR",
-      "assignees": [],
+      "assignees": [
+        "bytemare"
+      ],
       "labels": [],
       "body": "It would be interesting to provide values, test vectors, and expected behavior for edge cases and conditions we expect the protocol and implementations to return errors. This will help implementors evaluate some security properties to a certain degree.\r\n\r\nWe could draw a first list of some of these values and testing functions (e.g. invalid points). This goes well in hand with #256 ",
       "createdAt": "2022-01-10T20:10:30Z",
-      "updatedAt": "2022-01-10T20:10:30Z",
+      "updatedAt": "2022-04-05T21:59:18Z",
       "closedAt": null,
       "comments": []
     },
@@ -7076,11 +7122,13 @@
       "state": "OPEN",
       "author": "bytemare",
       "authorAssociation": "COLLABORATOR",
-      "assignees": [],
+      "assignees": [
+        "bytemare"
+      ],
       "labels": [],
       "body": "Currently, one of the client enumeration mitigation techniques is to encrypt the server's login response with a symmetric key furnished by the client during registration.\r\n\r\nThe notion that there is data in that record that is supposedly secret (the `masking_key`)  puts some constraint on the server and the operator of the user database. The \"_OPAQUE manual_\" would read _\"this key is a secret symmetric encryption key used to protect against client enumeration_\", and any good practice would hence indicate that this needs more attention than if there wasn't secret data.\r\n\r\nI'm trying to see this from the point of view in some years when OPAQUE is mainstream and deployed everywhere one can think of, and millions of developers are using it in their apps. The less poisonous/radioactive the record is (or just appears to be) the better.\r\n\r\nI have more trust in protocol implementers doing the right machinery to build OPAQUE than I have in people using it correctly. So the smaller the operational risk surface, the better.\r\n\r\n___\r\n\r\nMy suggestion is to replace the current masking mechanism with a non-interactive DHKE to encrypt the envelope in transit. Replace the symmetric `masking_key` with an asymmetric user public key.\r\n\r\nOn registration, the client uses a server-provided public key (in the registration response) to encrypt its record to that key and send the result to the server. This adds confidentiality to the record as discussed in #240.\r\nOn login, the server encrypts the envelope to the client's public key and sends that along in the credential response. The client recovers its private key (just like now) and can decrypt that ciphertext.\r\n\r\n**This brings the advantage of having a less sensitive client record since it won't contain any secret value anymore.**\r\n\r\nHPKE could be a good candidate for this.\r\n\r\ncc @chris-wood @kevinlewi ",
       "createdAt": "2022-01-10T20:39:02Z",
-      "updatedAt": "2022-02-25T12:26:33Z",
+      "updatedAt": "2022-04-05T21:17:09Z",
       "closedAt": null,
       "comments": [
         {
@@ -7152,6 +7200,13 @@
           "body": "> If an attacker has access to a user's record, then it does not need to mount an enumeration attack against that user; it already knows the user exists.\r\n\r\nI didn't think about that. If I understand this correctly, there is really no point to store the masking key in it's encrypted form (whatever form that encryption might take, IANA cryptographer, I will let you guys hash that out), so the masking key should really only be encrypted during transfer of the `RegistrationRecord` from the client during registration?",
           "createdAt": "2022-02-25T12:26:33Z",
           "updatedAt": "2022-02-25T12:26:33Z"
+        },
+        {
+          "author": "bytemare",
+          "authorAssociation": "COLLABORATOR",
+          "body": "What we can do is to add some text in the security section suggesting this solution for people considering that risk needs to be addressed. Piggy backing on #306 ",
+          "createdAt": "2022-04-05T21:17:08Z",
+          "updatedAt": "2022-04-05T21:17:08Z"
         }
       ]
     },
@@ -7343,13 +7398,15 @@
       "state": "OPEN",
       "author": "chris-wood",
       "authorAssociation": "COLLABORATOR",
-      "assignees": [],
+      "assignees": [
+        "kevinlewi"
+      ],
       "labels": [
         "next-version"
       ],
       "body": "This section has changed so much it no longer makes any sense. For example, what is the \"KE2 structure\"? It's not defined anywhere, yet it's referenced as if it has member fields. This needs to be done before the next version.",
       "createdAt": "2022-02-07T15:43:10Z",
-      "updatedAt": "2022-02-07T15:43:10Z",
+      "updatedAt": "2022-04-05T21:59:49Z",
       "closedAt": null,
       "comments": []
     },
@@ -7389,15 +7446,15 @@
       "id": "I_kwDOD79ejs5DwEQe",
       "title": "does the authorization mac check really have to be constant time?",
       "url": "https://github.com/cfrg/draft-irtf-cfrg-opaque/issues/341",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "stef",
       "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
       "labels": [],
       "body": "```\r\ndef ServerFinish(ke3):\r\n  if !ct_equal(ke3.client_mac, state.expected_client_mac):\r\n```\r\neach run of the protocol must use different macs anyway, so if an attacker learn how many bytes they managed to match, does not help them at all.\r\n\r\nalso i was wondering i saw, that in contrast to earlier variants, now the session key is only considered valid if this check is successful, but the paper and earlier drafts also allowed for implicit authentication in case the session key is used for setting up an encrypted channel for example, what happened to that? ",
       "createdAt": "2022-02-14T02:40:40Z",
-      "updatedAt": "2022-03-30T09:39:54Z",
-      "closedAt": null,
+      "updatedAt": "2022-04-05T21:56:36Z",
+      "closedAt": "2022-04-05T21:56:36Z",
       "comments": [
         {
           "author": "kevinlewi",
@@ -7472,11 +7529,13 @@
       "state": "OPEN",
       "author": "jamesw1892",
       "authorAssociation": "CONTRIBUTOR",
-      "assignees": [],
+      "assignees": [
+        "bytemare"
+      ],
       "labels": [],
       "body": "[Paragraph 1 of section 5](https://www.ietf.org/archive/id/draft-irtf-cfrg-opaque-07.html#section-5-1) states that the same keypair can be used with multiple clients and different OPRF seeds can be used for each client.\r\n\r\nWhereas [section 5.3](https://www.ietf.org/archive/id/draft-irtf-cfrg-opaque-07.html#name-finalize-registration) states that different keypairs can be used with each client and the same OPRF seed SHOULD be used for all clients.\r\n\r\nThis seems to be a bit confusing, it might be worth clarifying this in both places in the spec.",
       "createdAt": "2022-03-01T19:52:01Z",
-      "updatedAt": "2022-03-08T22:03:25Z",
+      "updatedAt": "2022-04-05T22:00:17Z",
       "closedAt": null,
       "comments": [
         {
@@ -24573,9 +24632,9 @@
       "labels": [
         "editorial"
       ],
-      "body": "closes #240 \r\n\r\nThis suggests protecting the client's record during registration with HPKE.",
+      "body": "closes #240 and #306\r\n\r\nThis suggests protecting the client's record during registration with HPKE.",
       "createdAt": "2022-01-09T18:10:41Z",
-      "updatedAt": "2022-02-14T02:01:43Z",
+      "updatedAt": "2022-04-05T21:17:35Z",
       "baseRepository": "cfrg/draft-irtf-cfrg-opaque",
       "baseRefName": "master",
       "baseRefOid": "855354fa80c3791870dd349909e3feb806562899",
@@ -26965,6 +27024,40 @@
           "comments": []
         }
       ]
+    },
+    {
+      "number": 349,
+      "id": "PR_kwDOD79ejs41r8Ws",
+      "title": "fix some artifacts",
+      "url": "https://github.com/cfrg/draft-irtf-cfrg-opaque/pull/349",
+      "state": "OPEN",
+      "author": "bytemare",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "I found some inconsistencies that need to be addressed.",
+      "createdAt": "2022-04-05T20:58:33Z",
+      "updatedAt": "2022-04-06T16:23:19Z",
+      "baseRepository": "cfrg/draft-irtf-cfrg-opaque",
+      "baseRefName": "master",
+      "baseRefOid": "661eff66d932255195802ff3dca6ba40edb12f19",
+      "headRepository": "cfrg/draft-irtf-cfrg-opaque",
+      "headRefName": "dbz/fix-draft-artifacts",
+      "headRefOid": "429240aeaf88075fc9860e62dcff56d357c29788",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [
+        {
+          "author": "chris-wood",
+          "authorAssociation": "COLLABORATOR",
+          "body": "@bytemare do you intend to make more changes, or is this ready for review?",
+          "createdAt": "2022-04-06T16:23:18Z",
+          "updatedAt": "2022-04-06T16:23:18Z"
+        }
+      ],
+      "reviews": []
     }
   ]
 }
