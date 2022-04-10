@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2022-04-07T01:27:05.505943+00:00",
+  "timestamp": "2022-04-10T01:40:00.063417+00:00",
   "repo": "cfrg/draft-irtf-cfrg-opaque",
   "labels": [
     {
@@ -7110,9 +7110,17 @@
       "labels": [],
       "body": "It would be interesting to provide values, test vectors, and expected behavior for edge cases and conditions we expect the protocol and implementations to return errors. This will help implementors evaluate some security properties to a certain degree.\r\n\r\nWe could draw a first list of some of these values and testing functions (e.g. invalid points). This goes well in hand with #256 ",
       "createdAt": "2022-01-10T20:10:30Z",
-      "updatedAt": "2022-04-05T21:59:18Z",
+      "updatedAt": "2022-04-09T21:44:42Z",
       "closedAt": null,
-      "comments": []
+      "comments": [
+        {
+          "author": "bytemare",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Pinged the VOPRF team in https://github.com/cfrg/draft-irtf-cfrg-voprf/issues/333 to see if such vectors are planned for the OPRF scope.",
+          "createdAt": "2022-04-09T21:44:42Z",
+          "updatedAt": "2022-04-09T21:44:42Z"
+        }
+      ]
     },
     {
       "number": 310,
@@ -27035,9 +27043,9 @@
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
-      "body": "I found some inconsistencies that need to be addressed.",
+      "body": "I found some inconsistencies that needed to be addressed.",
       "createdAt": "2022-04-05T20:58:33Z",
-      "updatedAt": "2022-04-06T16:23:19Z",
+      "updatedAt": "2022-04-09T21:37:39Z",
       "baseRepository": "cfrg/draft-irtf-cfrg-opaque",
       "baseRefName": "master",
       "baseRefOid": "661eff66d932255195802ff3dca6ba40edb12f19",
@@ -27055,6 +27063,13 @@
           "body": "@bytemare do you intend to make more changes, or is this ready for review?",
           "createdAt": "2022-04-06T16:23:18Z",
           "updatedAt": "2022-04-06T16:23:18Z"
+        },
+        {
+          "author": "bytemare",
+          "authorAssociation": "COLLABORATOR",
+          "body": "@chris-wood yes, sorry, it's ready for review",
+          "createdAt": "2022-04-09T21:37:22Z",
+          "updatedAt": "2022-04-09T21:37:22Z"
         }
       ],
       "reviews": []
