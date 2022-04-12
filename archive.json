@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2022-04-10T01:40:00.063417+00:00",
+  "timestamp": "2022-04-12T01:37:15.803914+00:00",
   "repo": "cfrg/draft-irtf-cfrg-opaque",
   "labels": [
     {
@@ -27038,24 +27038,26 @@
       "id": "PR_kwDOD79ejs41r8Ws",
       "title": "fix some artifacts",
       "url": "https://github.com/cfrg/draft-irtf-cfrg-opaque/pull/349",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "bytemare",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "I found some inconsistencies that needed to be addressed.",
       "createdAt": "2022-04-05T20:58:33Z",
-      "updatedAt": "2022-04-09T21:37:39Z",
+      "updatedAt": "2022-04-11T21:38:17Z",
       "baseRepository": "cfrg/draft-irtf-cfrg-opaque",
       "baseRefName": "master",
       "baseRefOid": "661eff66d932255195802ff3dca6ba40edb12f19",
       "headRepository": "cfrg/draft-irtf-cfrg-opaque",
       "headRefName": "dbz/fix-draft-artifacts",
       "headRefOid": "429240aeaf88075fc9860e62dcff56d357c29788",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "closedAt": "2022-04-11T14:19:32Z",
+      "mergedAt": "2022-04-11T14:19:32Z",
+      "mergedBy": "chris-wood",
+      "mergeCommit": {
+        "oid": "818df0028fdc0a64f1a9e301cfc6c0b227049b3d"
+      },
       "comments": [
         {
           "author": "chris-wood",
@@ -27072,6 +27074,99 @@
           "updatedAt": "2022-04-09T21:37:22Z"
         }
       ],
+      "reviews": [
+        {
+          "id": "PRR_kwDOD79ejs436gpY",
+          "commit": {
+            "abbreviatedOid": "429240a"
+          },
+          "author": "chris-wood",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2022-04-11T14:19:26Z",
+          "updatedAt": "2022-04-11T14:19:26Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 350,
+      "id": "PR_kwDOD79ejs42Clb3",
+      "title": "Minor editorial edits to dependencies section",
+      "url": "https://github.com/cfrg/draft-irtf-cfrg-opaque/pull/350",
+      "state": "OPEN",
+      "author": "kevinlewi",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Minor edits that fix grammar, keep consistent wording style, etc.",
+      "createdAt": "2022-04-12T00:35:50Z",
+      "updatedAt": "2022-04-12T00:52:31Z",
+      "baseRepository": "cfrg/draft-irtf-cfrg-opaque",
+      "baseRefName": "master",
+      "baseRefOid": "818df0028fdc0a64f1a9e301cfc6c0b227049b3d",
+      "headRepository": "kevinlewi/draft-irtf-cfrg-opaque",
+      "headRefName": "minor_edits_1",
+      "headRefOid": "b4558323bd089429c72cc40eb9d8e89a084f1787",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOD79ejs439AMV",
+          "commit": {
+            "abbreviatedOid": "310fc23"
+          },
+          "author": "kevinlewi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2022-04-12T00:36:47Z",
+          "updatedAt": "2022-04-12T00:37:43Z",
+          "comments": [
+            {
+              "originalPosition": 17,
+              "body": "I removed this second sentence because it isn't true everywhere (since we use \"OPAQUE-DeriveAuthKeyPair\" for one instance).",
+              "createdAt": "2022-04-12T00:36:47Z",
+              "updatedAt": "2022-04-12T00:37:43Z"
+            },
+            {
+              "originalPosition": 26,
+              "body": "This line is repeated already from 362, so I thought it appropriate to remove",
+              "createdAt": "2022-04-12T00:37:22Z",
+              "updatedAt": "2022-04-12T00:37:43Z"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "number": 351,
+      "id": "PR_kwDOD79ejs42Csj-",
+      "title": "Removing key recovery mechanism from dependencies section",
+      "url": "https://github.com/cfrg/draft-irtf-cfrg-opaque/pull/351",
+      "state": "OPEN",
+      "author": "kevinlewi",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "As discussed offline, I think this should be kept just as a subroutine, but not a dependency, since it is not defined external to the OPAQUE protocol.",
+      "createdAt": "2022-04-12T01:17:16Z",
+      "updatedAt": "2022-04-12T01:17:21Z",
+      "baseRepository": "cfrg/draft-irtf-cfrg-opaque",
+      "baseRefName": "master",
+      "baseRefOid": "818df0028fdc0a64f1a9e301cfc6c0b227049b3d",
+      "headRepository": "kevinlewi/draft-irtf-cfrg-opaque",
+      "headRefName": "remove_key_recovery_dep",
+      "headRefOid": "3da13c401a4a275ffa6bd598b03c96a7c4974d1f",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
       "reviews": []
     }
   ]
