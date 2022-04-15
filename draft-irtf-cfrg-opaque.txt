@@ -5,12 +5,12 @@
 Network Working Group                                        D. Bourdrez
 Internet-Draft                                                          
 Intended status: Informational                               H. Krawczyk
-Expires: 13 October 2022                             Algorand Foundation
+Expires: 17 October 2022                             Algorand Foundation
                                                                  K. Lewi
                                                            Novi Research
                                                               C. A. Wood
                                                         Cloudflare, Inc.
-                                                           11 April 2022
+                                                           15 April 2022
 
 
                   The OPAQUE Asymmetric PAKE Protocol
@@ -49,7 +49,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 13 October 2022.
+   This Internet-Draft will expire on 17 October 2022.
 
 Copyright Notice
 
@@ -293,14 +293,14 @@ Table of Contents
 
    *  Blind(element): Create and output (blind, blinded_element),
       consisting of a blinded representation of input element, denoted
-      blinded_element, along with a value to revert the this blinding
+      blinded_element, along with a value to revert the blinding
       process, denoted blind.
 
    *  Finalize(element, blind, evaluated_element): Finalize the OPRF
       evaluation using input element, random inverter blind, and
       evaluation output evaluated_element, yielding output oprf_output.
 
-   Moreover, the following OPRF server APIs:
+   Moreover, the following OPRF server APIs are used:
 
    *  Evaluate(k, blinded_element): Evaluate blinded input element
       blinded_element using input key k, yielding output element
@@ -309,9 +309,8 @@ Table of Contents
       parameter.
 
    *  DeriveKeyPair(seed, info): Derive a private and public key pair
-      deterministically from a seed, as described in [OPRF],
-      Section 3.2.  In this specification, the info parameter to
-      DeriveKeyPair is set to "OPAQUE-DeriveKeyPair".
+      deterministically from a seed and info parameter, as described in
+      [OPRF], Section 3.2.
 
    Finally, this specification makes use of the following shared APIs
    and parameters:
@@ -327,9 +326,6 @@ Table of Contents
       SerializeElement.
 
    *  Nok: The size of an OPRF private key as output from DeriveKeyPair.
-
-   This specification uses the OPRF mode (0x00) from [OPRF],
-   Section 3.1.
 
 2.2.  Key Derivation Function and Message Authentication Code
 
@@ -347,7 +343,7 @@ Table of Contents
 
    *  Nx: The output size of the Extract() function in bytes.
 
-   This specification also makes use of a collision resistant Message
+   This specification also makes use of a collision-resistant Message
    Authentication Code (MAC) with the following API and parameters:
 
    *  MAC(key, msg): Compute a message authentication code over input
@@ -365,8 +361,9 @@ Table of Contents
 
    *  Nh: The output size of the Hash() function in bytes.
 
-   A Key Stretching Function (KSF) is a slow and expensive cryptographic
-   hash function with the following API:
+   This specification makes use of a Key Stretching Function (KSF),
+   which is a slow and expensive cryptographic hash function with the
+   following API:
 
    *  Stretch(msg, params): Apply a key stretching function with
       parameters params to stretch the input msg and harden it against

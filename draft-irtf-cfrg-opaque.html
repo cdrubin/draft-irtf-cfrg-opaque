@@ -1027,7 +1027,7 @@ svg [stroke="fill"], svg [fill^="#fff"] {
 </tr></thead>
 <tfoot><tr>
 <td class="left">Bourdrez, et al.</td>
-<td class="center">Expires 13 October 2022</td>
+<td class="center">Expires 17 October 2022</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1040,12 +1040,12 @@ svg [stroke="fill"], svg [fill^="#fff"] {
 <dd class="internet-draft">draft-irtf-cfrg-opaque-latest</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2022-04-11" class="published">11 April 2022</time>
+<time datetime="2022-04-15" class="published">15 April 2022</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Informational</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2022-10-13">13 October 2022</time></dd>
+<dd class="expires"><time datetime="2022-10-17">17 October 2022</time></dd>
 <dt class="label-authors">Authors:</dt>
 <dd class="authors">
 <div class="author">
@@ -1105,7 +1105,7 @@ based on 3DH.<a href="#section-abstract-1" class="pilcrow">¶</a></p>
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 13 October 2022.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 17 October 2022.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -1544,21 +1544,20 @@ in <span>[<a href="#OPRF" class="xref">OPRF</a>]</span>, draft version -09, usin
 <ul class="normal">
 <li class="normal" id="section-2.1-3.1">Blind(element): Create and output (<code>blind</code>, <code>blinded_element</code>), consisting of a blinded
 representation of input <code>element</code>, denoted <code>blinded_element</code>, along with a value to revert
-the this blinding process, denoted <code>blind</code>.<a href="#section-2.1-3.1" class="pilcrow">¶</a>
+the blinding process, denoted <code>blind</code>.<a href="#section-2.1-3.1" class="pilcrow">¶</a>
 </li>
           <li class="normal" id="section-2.1-3.2">Finalize(element, blind, evaluated_element): Finalize the OPRF evaluation using input <code>element</code>,
 random inverter <code>blind</code>, and evaluation output <code>evaluated_element</code>, yielding output <code>oprf_output</code>.<a href="#section-2.1-3.2" class="pilcrow">¶</a>
 </li>
         </ul>
-<p id="section-2.1-4">Moreover, the following OPRF server APIs:<a href="#section-2.1-4" class="pilcrow">¶</a></p>
+<p id="section-2.1-4">Moreover, the following OPRF server APIs are used:<a href="#section-2.1-4" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-2.1-5.1">Evaluate(k, blinded_element): Evaluate blinded input element <code>blinded_element</code> using
 input key <code>k</code>, yielding output element <code>evaluated_element</code>. This is equivalent to
 the Evaluate function described in <span>[<a href="#OPRF" class="xref">OPRF</a>], <a href="https://datatracker.ietf.org/doc/html/draft-irtf-cfrg-voprf-09#section-3.3.1" class="relref">Section 3.3.1</a></span>, where <code>k</code> is the private key parameter.<a href="#section-2.1-5.1" class="pilcrow">¶</a>
 </li>
           <li class="normal" id="section-2.1-5.2">DeriveKeyPair(seed, info): Derive a private and public key pair deterministically
-from a seed, as described in <span>[<a href="#OPRF" class="xref">OPRF</a>], <a href="https://datatracker.ietf.org/doc/html/draft-irtf-cfrg-voprf-09#section-3.2" class="relref">Section 3.2</a></span>. In this specification,
-the info parameter to DeriveKeyPair is set to "OPAQUE-DeriveKeyPair".<a href="#section-2.1-5.2" class="pilcrow">¶</a>
+from a seed and info parameter, as described in <span>[<a href="#OPRF" class="xref">OPRF</a>], <a href="https://datatracker.ietf.org/doc/html/draft-irtf-cfrg-voprf-09#section-3.2" class="relref">Section 3.2</a></span>.<a href="#section-2.1-5.2" class="pilcrow">¶</a>
 </li>
         </ul>
 <p id="section-2.1-6">Finally, this specification makes use of the following shared APIs and parameters:<a href="#section-2.1-6" class="pilcrow">¶</a></p>
@@ -1574,7 +1573,6 @@ for more details.<a href="#section-2.1-7.2" class="pilcrow">¶</a>
           <li class="normal" id="section-2.1-7.4">Nok: The size of an OPRF private key as output from DeriveKeyPair.<a href="#section-2.1-7.4" class="pilcrow">¶</a>
 </li>
         </ul>
-<p id="section-2.1-8">This specification uses the OPRF mode (0x00) from <span>[<a href="#OPRF" class="xref">OPRF</a>], <a href="https://datatracker.ietf.org/doc/html/draft-irtf-cfrg-voprf-09#section-3.1" class="relref">Section 3.1</a></span>.<a href="#section-2.1-8" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="deps-symmetric">
@@ -1595,7 +1593,7 @@ into <code>L</code> bytes of output keying material.<a href="#section-2.2-2.2" c
           <li class="normal" id="section-2.2-2.3">Nx: The output size of the <code>Extract()</code> function in bytes.<a href="#section-2.2-2.3" class="pilcrow">¶</a>
 </li>
         </ul>
-<p id="section-2.2-3">This specification also makes use of a collision resistant Message Authentication Code
+<p id="section-2.2-3">This specification also makes use of a collision-resistant Message Authentication Code
 (MAC) with the following API and parameters:<a href="#section-2.2-3" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-2.2-4.1">MAC(key, msg): Compute a message authentication code over input <code>msg</code> with key
@@ -1620,8 +1618,8 @@ fixed-length digest of size <code>Nh</code> bytes.<a href="#section-2.3-2.1" cla
           <li class="normal" id="section-2.3-2.2">Nh: The output size of the <code>Hash()</code> function in bytes.<a href="#section-2.3-2.2" class="pilcrow">¶</a>
 </li>
         </ul>
-<p id="section-2.3-3">A Key Stretching Function (KSF) is a slow and expensive cryptographic hash function
-with the following API:<a href="#section-2.3-3" class="pilcrow">¶</a></p>
+<p id="section-2.3-3">This specification makes use of a Key Stretching Function (KSF), which is a slow
+and expensive cryptographic hash function with the following API:<a href="#section-2.3-3" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-2.3-4.1">Stretch(msg, params): Apply a key stretching function with parameters
 <code>params</code> to stretch the input <code>msg</code> and harden it against offline
