@@ -5,12 +5,12 @@
 Network Working Group                                        D. Bourdrez
 Internet-Draft                                                          
 Intended status: Informational                               H. Krawczyk
-Expires: 17 October 2022                             Algorand Foundation
+Expires: 19 October 2022                             Algorand Foundation
                                                                  K. Lewi
                                                            Novi Research
                                                               C. A. Wood
                                                         Cloudflare, Inc.
-                                                           15 April 2022
+                                                           17 April 2022
 
 
                   The OPAQUE Asymmetric PAKE Protocol
@@ -49,7 +49,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 17 October 2022.
+   This Internet-Draft will expire on 19 October 2022.
 
 Copyright Notice
 
@@ -74,8 +74,7 @@ Table of Contents
      2.1.  Oblivious Pseudorandom Function
      2.2.  Key Derivation Function and Message Authentication Code
      2.3.  Hash Functions
-     2.4.  Key Recovery Method
-     2.5.  Authenticated Key Exchange (AKE) Protocol
+     2.4.  Authenticated Key Exchange (AKE) Protocol
    3.  Protocol Overview
      3.1.  Setup
      3.2.  Offline Registration
@@ -271,9 +270,7 @@ Table of Contents
 
    *  Key Stretching Function (KSF); Section 2.3
 
-   *  Key Recovery Mechanism; Section 2.4
-
-   *  Authenticated Key Exchange (AKE) protocol; Section 2.5
+   *  Authenticated Key Exchange (AKE) protocol; Section 2.4
 
    This section describes these protocols and primitives in more detail.
    Unless said otherwise, all random nonces and seeds used in these
@@ -370,44 +367,7 @@ Table of Contents
       offline dictionary attacks.  This function also needs to satisfy
       collision resistance.
 
-2.4.  Key Recovery Method
-
-   OPAQUE relies on a key recovery mechanism for storing authentication
-   material on the server and recovering it on the client.  This
-   material is encapsulated in an envelope, whose structure, encoding,
-   and size must be specified by the key recovery mechanism.  The size
-   of the envelope is denoted Ne and may vary between mechanisms.
-
-   The key recovery storage mechanism takes as input a private seed and
-   outputs an envelope.  The retrieval process takes as input a private
-   seed and envelope and outputs authentication material.  The
-   signatures for these functionalities are as follows:
-
-   *  Store(randomized_pwd, server_public_key, server_identity,
-      client_identity): build and return an Envelope structure and the
-      client's public key.
-
-   *  Recover(randomized_pwd, server_public_key, envelope,
-      server_identity, client_identity): recover and return the
-      authentication material for the AKE from the Envelope.  This
-      function raises the EnvelopeRecoveryError error if the private
-      seed cannot be used for recovering authentication material from
-      the input envelope.
-
-   The key recovery mechanism MUST return an error when trying to
-   recover authentication material from an envelope with a private seed
-   that was not used in producing the envelope.
-
-   Moreover, it MUST be compatible with the chosen AKE.  For example,
-   the key recovery mechanism specified in Section 4.1 directly recovers
-   a private key from a seed, and the cryptographic primitive in the AKE
-   must therefore support such a possibility.
-
-   If applications implement Section 10.9, they MUST use the same
-   mechanism throughout their lifecycle in order to avoid activity leaks
-   due to switching.
-
-2.5.  Authenticated Key Exchange (AKE) Protocol
+2.4.  Authenticated Key Exchange (AKE) Protocol
 
    OPAQUE additionally depends on a three-message Authenticated Key
    Exchange (AKE) protocol which satisfies the forward secrecy and KCI
@@ -2267,13 +2227,12 @@ Appendix A.  Acknowledgments
 Appendix B.  Alternate Key Recovery Mechanisms
 
    Client authentication material can be stored and retrieved using
-   different key recovery mechanisms, provided these mechanisms adhere
-   to the requirements specified in Section 2.4.  Any key recovery
-   mechanism that encrypts data in the envelope MUST use an
-   authenticated encryption scheme with random key-robustness (or key-
-   committing).  Deviating from the key-robustness requirement may open
-   the protocol to attacks, e.g., [LGR20].  This specification enforces
-   this property by using a MAC over the envelope contents.
+   different key recovery mechanisms.  Any key recovery mechanism that
+   encrypts data in the envelope MUST use an authenticated encryption
+   scheme with random key-robustness (or key-committing).  Deviating
+   from the key-robustness requirement may open the protocol to attacks,
+   e.g., [LGR20].  This specification enforces this property by using a
+   MAC over the envelope contents.
 
    We remark that export_key for authentication or encryption requires
    no special properties from the authentication or encryption schemes
