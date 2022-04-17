@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2022-04-12T01:37:15.803914+00:00",
+  "timestamp": "2022-04-17T01:42:06.356569+00:00",
   "repo": "cfrg/draft-irtf-cfrg-opaque",
   "labels": [
     {
@@ -27095,24 +27095,26 @@
       "id": "PR_kwDOD79ejs42Clb3",
       "title": "Minor editorial edits to dependencies section",
       "url": "https://github.com/cfrg/draft-irtf-cfrg-opaque/pull/350",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "kevinlewi",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "Minor edits that fix grammar, keep consistent wording style, etc.",
       "createdAt": "2022-04-12T00:35:50Z",
-      "updatedAt": "2022-04-12T00:52:31Z",
+      "updatedAt": "2022-04-15T01:55:55Z",
       "baseRepository": "cfrg/draft-irtf-cfrg-opaque",
       "baseRefName": "master",
       "baseRefOid": "818df0028fdc0a64f1a9e301cfc6c0b227049b3d",
       "headRepository": "kevinlewi/draft-irtf-cfrg-opaque",
       "headRefName": "minor_edits_1",
       "headRefOid": "b4558323bd089429c72cc40eb9d8e89a084f1787",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "closedAt": "2022-04-15T01:55:55Z",
+      "mergedAt": "2022-04-15T01:55:54Z",
+      "mergedBy": "chris-wood",
+      "mergeCommit": {
+        "oid": "367965e6f7d1be4dc5ecbbb8fa621f678effe4d3"
+      },
       "comments": [],
       "reviews": [
         {
@@ -27140,6 +27142,19 @@
               "updatedAt": "2022-04-12T00:37:43Z"
             }
           ]
+        },
+        {
+          "id": "PRR_kwDOD79ejs44Nm0R",
+          "commit": {
+            "abbreviatedOid": "b455832"
+          },
+          "author": "chris-wood",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2022-04-15T01:55:50Z",
+          "updatedAt": "2022-04-15T01:55:50Z",
+          "comments": []
         }
       ]
     },
@@ -27155,7 +27170,7 @@
       "labels": [],
       "body": "As discussed offline, I think this should be kept just as a subroutine, but not a dependency, since it is not defined external to the OPAQUE protocol.",
       "createdAt": "2022-04-12T01:17:16Z",
-      "updatedAt": "2022-04-12T01:17:21Z",
+      "updatedAt": "2022-04-15T01:57:10Z",
       "baseRepository": "cfrg/draft-irtf-cfrg-opaque",
       "baseRefName": "master",
       "baseRefOid": "818df0028fdc0a64f1a9e301cfc6c0b227049b3d",
@@ -27167,7 +27182,21 @@
       "mergedBy": null,
       "mergeCommit": null,
       "comments": [],
-      "reviews": []
+      "reviews": [
+        {
+          "id": "PRR_kwDOD79ejs44Nm7J",
+          "commit": {
+            "abbreviatedOid": "3da13c4"
+          },
+          "author": "chris-wood",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2022-04-15T01:57:10Z",
+          "updatedAt": "2022-04-15T01:57:10Z",
+          "comments": []
+        }
+      ]
     }
   ]
 }
