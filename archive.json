@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2022-04-17T01:42:06.356569+00:00",
+  "timestamp": "2022-04-24T01:40:04.997594+00:00",
   "repo": "cfrg/draft-irtf-cfrg-opaque",
   "labels": [
     {
@@ -27163,24 +27163,26 @@
       "id": "PR_kwDOD79ejs42Csj-",
       "title": "Removing key recovery mechanism from dependencies section",
       "url": "https://github.com/cfrg/draft-irtf-cfrg-opaque/pull/351",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "kevinlewi",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "As discussed offline, I think this should be kept just as a subroutine, but not a dependency, since it is not defined external to the OPAQUE protocol.",
       "createdAt": "2022-04-12T01:17:16Z",
-      "updatedAt": "2022-04-15T01:57:10Z",
+      "updatedAt": "2022-04-17T22:30:59Z",
       "baseRepository": "cfrg/draft-irtf-cfrg-opaque",
       "baseRefName": "master",
       "baseRefOid": "818df0028fdc0a64f1a9e301cfc6c0b227049b3d",
       "headRepository": "kevinlewi/draft-irtf-cfrg-opaque",
       "headRefName": "remove_key_recovery_dep",
       "headRefOid": "3da13c401a4a275ffa6bd598b03c96a7c4974d1f",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "closedAt": "2022-04-17T22:30:59Z",
+      "mergedAt": "2022-04-17T22:30:59Z",
+      "mergedBy": "kevinlewi",
+      "mergeCommit": {
+        "oid": "fa2c17dd13ddd3d4e97d32b98e84d846361d90b4"
+      },
       "comments": [],
       "reviews": [
         {
@@ -27195,6 +27197,152 @@
           "createdAt": "2022-04-15T01:57:10Z",
           "updatedAt": "2022-04-15T01:57:10Z",
           "comments": []
+        }
+      ]
+    },
+    {
+      "number": 352,
+      "id": "PR_kwDOD79ejs42aLQ-",
+      "title": "Removing AKE deps section and defining KE1/KE2/KE3 structs",
+      "url": "https://github.com/cfrg/draft-irtf-cfrg-opaque/pull/352",
+      "state": "OPEN",
+      "author": "kevinlewi",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "As discussed offline, this will remove the \"Authenticated Key Exchange (AKE) Protocol\" subsection from the \"Cryptographic Dependencies\" section. This also means removing the definitions of the subroutines \"AuthInit\", \"AuthResponse\", \"AuthFinish\".\r\n\r\nThis is also an opportunity to clearly define the structs KE1, KE2, and KE3 in the \"AKE Messages\" section.\r\n\r\nPartially addresses #336, but I think in order to complete #336, we should also re-order the sections in the Online AKE stage slightly, so that we aren't at any point referencing things that haven't yet been defined. This means moving the \"Credential Retrieval\" subsection up top, followed by \"AKE messages\", followed by \"Client Authentication Functions\" and \"Server Authentication Functions\". Not addressing this reordering in this PR, but will do so in a follow-up one.",
+      "createdAt": "2022-04-19T09:07:25Z",
+      "updatedAt": "2022-04-22T02:54:29Z",
+      "baseRepository": "cfrg/draft-irtf-cfrg-opaque",
+      "baseRefName": "master",
+      "baseRefOid": "fa2c17dd13ddd3d4e97d32b98e84d846361d90b4",
+      "headRepository": "kevinlewi/draft-irtf-cfrg-opaque",
+      "headRefName": "remove_ake_deps",
+      "headRefOid": "85a79949c580574f1b3187b99808f12655b5ed53",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [
+        {
+          "author": "chris-wood",
+          "authorAssociation": "COLLABORATOR",
+          "body": "This change looks good, but does it match the reference implementation?",
+          "createdAt": "2022-04-20T13:54:46Z",
+          "updatedAt": "2022-04-20T13:54:46Z"
+        },
+        {
+          "author": "kevinlewi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "@chris-wood : These changes have no impact on the implementation, as they are purely editorial.\r\n\r\n@bytemare : Please take a look at the latest updates here. As discussed offline, I have kept the AuthInit/AuthResponse structs (renamed AuthInit to AuthRequest though), so that KE1 and KE2 only have two elements. I moved the text about explaining the structure of KE1/KE2 to be within the AKE messages section.",
+          "createdAt": "2022-04-22T02:23:45Z",
+          "updatedAt": "2022-04-22T02:23:45Z"
+        },
+        {
+          "author": "chris-wood",
+          "authorAssociation": "COLLABORATOR",
+          "body": "I understand that it's editorial, but I'm asking if the new names and types match that which we use in the reference implementation.",
+          "createdAt": "2022-04-22T02:38:41Z",
+          "updatedAt": "2022-04-22T02:38:41Z"
+        },
+        {
+          "author": "kevinlewi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "> I understand that it's editorial, but I'm asking if the new names and types match that which we use in the reference implementation.\r\n\r\nAh I see. Yes, just checked the poc/ directory, and there was no mention of AuthInit/AuthResponse/AuthFinish previously (since we referred to their parameters directly in the ref implementation), so I don't believe anything needs to change there. Thanks for the clarification! :)",
+          "createdAt": "2022-04-22T02:42:21Z",
+          "updatedAt": "2022-04-22T02:42:21Z"
+        }
+      ],
+      "reviews": [
+        {
+          "id": "PRR_kwDOD79ejs44aQrt",
+          "commit": {
+            "abbreviatedOid": "2fdffa6"
+          },
+          "author": "bytemare",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2022-04-19T23:06:29Z",
+          "updatedAt": "2022-04-19T23:06:30Z",
+          "comments": [
+            {
+              "originalPosition": 61,
+              "body": "Why remove this?",
+              "createdAt": "2022-04-19T23:06:29Z",
+              "updatedAt": "2022-04-19T23:06:30Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOD79ejs44afhW",
+          "commit": {
+            "abbreviatedOid": "2fdffa6"
+          },
+          "author": "bytemare",
+          "authorAssociation": "COLLABORATOR",
+          "state": "CHANGES_REQUESTED",
+          "body": "",
+          "createdAt": "2022-04-20T00:30:14Z",
+          "updatedAt": "2022-04-20T00:39:44Z",
+          "comments": [
+            {
+              "originalPosition": 80,
+              "body": "```suggestion\r\n  uint8 blinded_element[Noe];\r\n```",
+              "createdAt": "2022-04-20T00:30:14Z",
+              "updatedAt": "2022-04-20T00:39:44Z"
+            },
+            {
+              "originalPosition": 87,
+              "body": "```suggestion\r\nblinded_element: A serialized OPRF blinded element of fixed size Noe.\r\n```",
+              "createdAt": "2022-04-20T00:31:52Z",
+              "updatedAt": "2022-04-20T00:39:44Z"
+            },
+            {
+              "originalPosition": 95,
+              "body": "```suggestion\r\n  uint8 evaluated_message[Noe];\r\n  uint8 masking_nonce[Nn];\r\n  uint8 masked_response[Npk + Ne];\r\n```",
+              "createdAt": "2022-04-20T00:32:29Z",
+              "updatedAt": "2022-04-20T00:39:44Z"
+            },
+            {
+              "originalPosition": 91,
+              "body": "```suggestion\r\nclient_keyshare : Serialized client ephemeral key share of fixed size Npk.\r\n```",
+              "createdAt": "2022-04-20T00:34:21Z",
+              "updatedAt": "2022-04-20T00:39:44Z"
+            },
+            {
+              "originalPosition": 103,
+              "body": "evaluated_message: A serialized OPRF evaluated element of fixed size Noe.\r\n\r\nmasking_nonce: A nonce used for the confidentiality of the masked_response field of fixed size Nn.\r\n\r\nmasked_response: An encrypted form of the server's public key and the client's `Envelope` structure of fixed size Npk + Ne.",
+              "createdAt": "2022-04-20T00:38:46Z",
+              "updatedAt": "2022-04-20T00:39:44Z"
+            },
+            {
+              "originalPosition": 116,
+              "body": "```suggestion\r\nclient_mac: An authentication tag computed over the handshake transcript of fixed size Nm.\r\n```",
+              "createdAt": "2022-04-20T00:39:15Z",
+              "updatedAt": "2022-04-20T00:39:44Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOD79ejs44dUAo",
+          "commit": {
+            "abbreviatedOid": "2fdffa6"
+          },
+          "author": "chris-wood",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2022-04-20T13:55:25Z",
+          "updatedAt": "2022-04-20T13:55:25Z",
+          "comments": [
+            {
+              "originalPosition": 61,
+              "body": "It doesn't seem to add any value (to me, after not having looked at it for quite some time).",
+              "createdAt": "2022-04-20T13:55:25Z",
+              "updatedAt": "2022-04-20T13:55:25Z"
+            }
+          ]
         }
       ]
     }
