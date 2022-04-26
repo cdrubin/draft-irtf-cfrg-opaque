@@ -19,15 +19,15 @@ hide the password from the server, even during password registration.
 This document specifies the core OPAQUE protocol and one instantiation
 based on 3DH. 
     " name="description">
-<meta content="xml2rfc 3.12.3" name="generator">
+<meta content="xml2rfc 3.12.4" name="generator">
 <meta content="Internet-Draft" name="keyword">
 <meta content="draft-irtf-cfrg-opaque-latest" name="ietf.draft">
 <!-- Generator version information:
-  xml2rfc 3.12.3
+  xml2rfc 3.12.4
     Python 3.9.7
     appdirs 1.4.4
     ConfigArgParse 1.3
-    google-i18n-address 2.5.0
+    google-i18n-address 2.5.1
     html5lib 1.1
     intervaltree 3.1.0
     Jinja2 2.11.3
@@ -1027,7 +1027,7 @@ svg [stroke="fill"], svg [fill^="#fff"] {
 </tr></thead>
 <tfoot><tr>
 <td class="left">Bourdrez, et al.</td>
-<td class="center">Expires 19 October 2022</td>
+<td class="center">Expires 28 October 2022</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1040,12 +1040,12 @@ svg [stroke="fill"], svg [fill^="#fff"] {
 <dd class="internet-draft">draft-irtf-cfrg-opaque-latest</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2022-04-17" class="published">17 April 2022</time>
+<time datetime="2022-04-26" class="published">26 April 2022</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Informational</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2022-10-19">19 October 2022</time></dd>
+<dd class="expires"><time datetime="2022-10-28">28 October 2022</time></dd>
 <dt class="label-authors">Authors:</dt>
 <dd class="authors">
 <div class="author">
@@ -1105,7 +1105,7 @@ based on 3DH.<a href="#section-abstract-1" class="pilcrow">¶</a></p>
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 19 October 2022.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 28 October 2022.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -1156,9 +1156,6 @@ based on 3DH.<a href="#section-abstract-1" class="pilcrow">¶</a></p>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.2.2.3">
                 <p id="section-toc.1-1.2.2.3.1"><a href="#section-2.3" class="xref">2.3</a>.  <a href="#name-hash-functions" class="xref">Hash Functions</a></p>
-</li>
-              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.2.2.4">
-                <p id="section-toc.1-1.2.2.4.1"><a href="#section-2.4" class="xref">2.4</a>.  <a href="#name-authenticated-key-exchange-" class="xref">Authenticated Key Exchange (AKE) Protocol</a></p>
 </li>
             </ul>
 </li>
@@ -1519,8 +1516,6 @@ lack of value.<a href="#section-1.2-3" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="section-2-2.5">Key Stretching Function (KSF); <a href="#deps-hash" class="xref">Section 2.3</a><a href="#section-2-2.5" class="pilcrow">¶</a>
 </li>
-        <li class="normal" id="section-2-2.6">Authenticated Key Exchange (AKE) protocol; <a href="#deps-ake" class="xref">Section 2.4</a><a href="#section-2-2.6" class="pilcrow">¶</a>
-</li>
       </ul>
 <p id="section-2-3">This section describes these protocols and primitives in more detail. Unless said
 otherwise, all random nonces and seeds used in these dependencies and the rest of
@@ -1621,45 +1616,6 @@ and expensive cryptographic hash function with the following API:<a href="#secti
 dictionary attacks. This function also needs to satisfy collision resistance.<a href="#section-2.3-4.1" class="pilcrow">¶</a>
 </li>
         </ul>
-</section>
-</div>
-<div id="deps-ake">
-<section id="section-2.4">
-        <h3 id="name-authenticated-key-exchange-">
-<a href="#section-2.4" class="section-number selfRef">2.4. </a><a href="#name-authenticated-key-exchange-" class="section-name selfRef">Authenticated Key Exchange (AKE) Protocol</a>
-        </h3>
-<p id="section-2.4-1">OPAQUE additionally depends on a three-message Authenticated Key Exchange (AKE)
-protocol which satisfies the forward secrecy and KCI properties discussed in
-<a href="#security-considerations" class="xref">Section 10</a>.<a href="#section-2.4-1" class="pilcrow">¶</a></p>
-<p id="section-2.4-2">The AKE must define three messages <code>AuthInit</code>, <code>AuthResponse</code> and <code>AuthFinish</code>
-and provide the following functions for the client:<a href="#section-2.4-2" class="pilcrow">¶</a></p>
-<ul class="normal">
-<li class="normal" id="section-2.4-3.1">Start(): Initiate the AKE by producing message <code>AuthInit</code>.<a href="#section-2.4-3.1" class="pilcrow">¶</a>
-</li>
-          <li class="normal" id="section-2.4-3.2">ClientFinalize(client_identity, client_private_key,
-server_identity, server_public_key, <code>AuthInit</code>): upon receipt of the server's
-response <code>AuthResponse</code>, complete the protocol for the client, produce
-<code>AuthFinish</code>.<a href="#section-2.4-3.2" class="pilcrow">¶</a>
-</li>
-        </ul>
-<p id="section-2.4-4">The AKE protocol must provide the following functions for the server:<a href="#section-2.4-4" class="pilcrow">¶</a></p>
-<ul class="normal">
-<li class="normal" id="section-2.4-5.1">Response(server_identity, server_private_key, client_identity,
-client_public_key, <code>AuthInit</code>): upon receipt of a client's request <code>AuthInit</code>,
-engage in the AKE.<a href="#section-2.4-5.1" class="pilcrow">¶</a>
-</li>
-          <li class="normal" id="section-2.4-5.2">ServerFinalize(<code>AuthFinish</code>): upon receipt of a client's final AKE message
-<code>AuthFinish</code>, complete the protocol for the server.<a href="#section-2.4-5.2" class="pilcrow">¶</a>
-</li>
-        </ul>
-<p id="section-2.4-6">Both ClientFinalize and ServerFinalize return an error if authentication failed.
-In this case, clients and servers MUST NOT use any outputs from the protocol,
-such as <code>session_key</code> or <code>export_key</code> (defined below).<a href="#section-2.4-6" class="pilcrow">¶</a></p>
-<p id="section-2.4-7">Prior to the execution of these functions, both the client and the server MUST
-agree on a configuration; see <a href="#configurations" class="xref">Section 7</a> for details.<a href="#section-2.4-7" class="pilcrow">¶</a></p>
-<p id="section-2.4-8">This specification defines one particular AKE based on 3DH;
-see <a href="#ake-protocol" class="xref">Section 6.4</a>. 3DH assumes a prime-order group as described in
-<span>[<a href="#OPRF" class="xref">OPRF</a>], <a href="https://datatracker.ietf.org/doc/html/draft-irtf-cfrg-voprf-09#section-2.1" class="relref">Section 2.1</a></span>.<a href="#section-2.4-8" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>
@@ -1769,28 +1725,15 @@ use these values as needed.<a href="#section-3.3-1" class="pilcrow">¶</a></p>
 </div>
 <p id="section-3.3-4">These messages are named <code>KE1</code>, <code>KE2</code>, and <code>KE3</code>, respectively. They carry the
 messages of the concurrent execution of the key recovery process (OPRF) and the
-authenticated key exchange (AKE):<a href="#section-3.3-4" class="pilcrow">¶</a></p>
-<ul class="normal">
-<li class="normal" id="section-3.3-5.1">
-            <code>KE1</code> is composed of the <code>CredentialRequest</code> and <code>AuthInit</code> messages<a href="#section-3.3-5.1" class="pilcrow">¶</a>
-</li>
-          <li class="normal" id="section-3.3-5.2">
-            <code>KE2</code> is composed of the <code>CredentialResponse</code> and <code>AuthResponse</code> messages<a href="#section-3.3-5.2" class="pilcrow">¶</a>
-</li>
-          <li class="normal" id="section-3.3-5.3">
-            <code>KE3</code> represents the <code>AuthFinish</code> message<a href="#section-3.3-5.3" class="pilcrow">¶</a>
-</li>
-        </ul>
-<p id="section-3.3-6">The <code>CredentialRequest</code> and <code>CredentialResponse</code> message contents and wire
-format are specified in <a href="#cred-retrieval" class="xref">Section 6.3</a>, and those of <code>AuthInit</code>,
-<code>AuthResponse</code> and <code>AuthFinish</code> are specified in <a href="#ake-messages" class="xref">Section 6.4.1</a>.<a href="#section-3.3-6" class="pilcrow">¶</a></p>
-<p id="section-3.3-7">The rest of this document describes the details of these stages in detail.
+authenticated key exchange (AKE), and their corresponding wire formats are
+specified in <a href="#ake-messages" class="xref">Section 6.4.1</a>.<a href="#section-3.3-4" class="pilcrow">¶</a></p>
+<p id="section-3.3-5">The rest of this document describes the details of these stages in detail.
 <a href="#client-material" class="xref">Section 4</a> describes how client credential information is
 generated, encoded, stored on the server on registration, and recovered on
 login. <a href="#offline-phase" class="xref">Section 5</a> describes the first registration stage of the protocol,
 and <a href="#online-phase" class="xref">Section 6</a> describes the second authentication stage of the protocol.
 <a href="#configurations" class="xref">Section 7</a> describes how to instantiate OPAQUE using different
-cryptographic dependencies and parameters.<a href="#section-3.3-7" class="pilcrow">¶</a></p>
+cryptographic dependencies and parameters.<a href="#section-3.3-5" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>
@@ -2370,7 +2313,7 @@ Output:
 
 def ClientFinish(client_identity, server_identity, ke2):
   (client_private_key, server_public_key, export_key) =
-    RecoverCredentials(state.password, state.blind, ke2.CredentialResponse,
+    RecoverCredentials(state.password, state.blind, ke2.credential_response,
                        server_identity, client_identity)
   (ke3, session_key) =
     ClientFinalize(client_identity, client_private_key, server_identity,
@@ -2655,39 +2598,63 @@ server functions, respectively.<a href="#section-6.4-6" class="pilcrow">¶</a></
           <h4 id="name-ake-messages">
 <a href="#section-6.4.1" class="section-number selfRef">6.4.1. </a><a href="#name-ake-messages" class="section-name selfRef">AKE Messages</a>
           </h4>
-<div class="alignLeft art-text artwork" id="section-6.4.1-1">
+<p id="section-6.4.1-1">In this section, we define the <code>KE1</code>, <code>KE2</code>, and <code>KE3</code> structs which make up
+the AKE messages used in the protocol. <code>KE1</code> is composed of a <code>CredentialRequest</code>
+and <code>AuthRequest</code>, and <code>KE2</code> is composed of a <code>CredentialResponse</code>
+and <code>AuthResponse</code>.<a href="#section-6.4.1-1" class="pilcrow">¶</a></p>
+<div class="alignLeft art-text artwork" id="section-6.4.1-2">
 <pre>
 struct {
   uint8 client_nonce[Nn];
   uint8 client_keyshare[Npk];
-} AuthInit;
-</pre><a href="#section-6.4.1-1" class="pilcrow">¶</a>
+} AuthRequest;
+</pre><a href="#section-6.4.1-2" class="pilcrow">¶</a>
 </div>
-<p id="section-6.4.1-2">client_nonce : A fresh randomly generated nonce of length Nn.<a href="#section-6.4.1-2" class="pilcrow">¶</a></p>
-<p id="section-6.4.1-3">client_keyshare : Client ephemeral key share of fixed size Npk.<a href="#section-6.4.1-3" class="pilcrow">¶</a></p>
-<div class="alignLeft art-text artwork" id="section-6.4.1-4">
+<p id="section-6.4.1-3">client_nonce : A fresh randomly generated nonce of length Nn.<a href="#section-6.4.1-3" class="pilcrow">¶</a></p>
+<p id="section-6.4.1-4">client_keyshare : Serialized client ephemeral key share of fixed size Npk.<a href="#section-6.4.1-4" class="pilcrow">¶</a></p>
+<div class="alignLeft art-text artwork" id="section-6.4.1-5">
+<pre>
+struct {
+  CredentialRequest credential_request;
+  AuthRequest auth_request;
+} KE1;
+</pre><a href="#section-6.4.1-5" class="pilcrow">¶</a>
+</div>
+<p id="section-6.4.1-6">credential_request: A CredentialRequest structure.<a href="#section-6.4.1-6" class="pilcrow">¶</a></p>
+<p id="section-6.4.1-7">auth_request: An AuthRequest structure.<a href="#section-6.4.1-7" class="pilcrow">¶</a></p>
+<div class="alignLeft art-text artwork" id="section-6.4.1-8">
 <pre>
 struct {
   uint8 server_nonce[Nn];
   uint8 server_keyshare[Npk];
   uint8 server_mac[Nm];
 } AuthResponse;
-</pre><a href="#section-6.4.1-4" class="pilcrow">¶</a>
+</pre><a href="#section-6.4.1-8" class="pilcrow">¶</a>
 </div>
-<p id="section-6.4.1-5">server_nonce : A fresh randomly generated nonce of length Nn.<a href="#section-6.4.1-5" class="pilcrow">¶</a></p>
-<p id="section-6.4.1-6">server_keyshare : Server ephemeral key share of fixed size Npk, where Npk
-depends on the corresponding prime order group.<a href="#section-6.4.1-6" class="pilcrow">¶</a></p>
-<p id="section-6.4.1-7">server_mac : An authentication tag computed over the handshake transcript
-computed using Km2, defined below.<a href="#section-6.4.1-7" class="pilcrow">¶</a></p>
-<div class="alignLeft art-text artwork" id="section-6.4.1-8">
+<p id="section-6.4.1-9">server_nonce : A fresh randomly generated nonce of length Nn.<a href="#section-6.4.1-9" class="pilcrow">¶</a></p>
+<p id="section-6.4.1-10">server_keyshare : Server ephemeral key share of fixed size Npk, where Npk
+depends on the corresponding prime order group.<a href="#section-6.4.1-10" class="pilcrow">¶</a></p>
+<p id="section-6.4.1-11">server_mac : An authentication tag computed over the handshake transcript
+computed using Km2, defined below.<a href="#section-6.4.1-11" class="pilcrow">¶</a></p>
+<div class="alignLeft art-text artwork" id="section-6.4.1-12">
+<pre>
+struct {
+  CredentialResponse credential_response;
+  AuthResponse auth_response;
+} KE2;
+</pre><a href="#section-6.4.1-12" class="pilcrow">¶</a>
+</div>
+<p id="section-6.4.1-13">credential_response: A CredentialResponse structure.<a href="#section-6.4.1-13" class="pilcrow">¶</a></p>
+<p id="section-6.4.1-14">auth_response: An AuthResponse structure.<a href="#section-6.4.1-14" class="pilcrow">¶</a></p>
+<div class="alignLeft art-text artwork" id="section-6.4.1-15">
 <pre>
 struct {
   uint8 client_mac[Nm];
-} AuthFinish;
-</pre><a href="#section-6.4.1-8" class="pilcrow">¶</a>
+} KE3;
+</pre><a href="#section-6.4.1-15" class="pilcrow">¶</a>
 </div>
-<p id="section-6.4.1-9">client_mac : An authentication tag computed over the handshake transcript
-computed using Km2, defined below.<a href="#section-6.4.1-9" class="pilcrow">¶</a></p>
+<p id="section-6.4.1-16">client_mac : An authentication tag computed over the handshake transcript
+of fixed size Nm, computed using Km2, defined below.<a href="#section-6.4.1-16" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="key-creation">
@@ -2776,7 +2743,8 @@ def Preamble(client_identity, ke1, server_identity, ke2):
                      ke1,
                      I2OSP(len(server_identity), 2), server_identity,
                      ke2.credential_response,
-                     ke2.AuthResponse.server_nonce, ke2.AuthResponse.server_keyshare)
+                     ke2.auth_response.server_nonce,
+                     ke2.auth_response.server_keyshare)
   return preamble
 </pre><a href="#section-6.4.3.1-8" class="pilcrow">¶</a>
 </div>
@@ -2839,7 +2807,8 @@ Output:
 def Start(credential_request):
   client_nonce = random(Nn)
   (client_secret, client_keyshare) = GenerateAuthKeyPair()
-  Create KE1 ke1 with (credential_request, client_nonce, client_keyshare)
+  Create AuthRequest auth_request with (client_nonce, client_keyshare)
+  Create KE1 ke1 with (credential_request, auth_request)
   Populate state with ClientState(client_secret, ke1)
   return (ke1, client_secret)
 </pre><a href="#section-6.4.4-1" class="pilcrow">¶</a>
@@ -2921,8 +2890,8 @@ def Response(server_identity, server_private_key, client_identity,
   Create inner_ke2 ike2 with (ke1.credential_response, server_nonce, server_keyshare)
   preamble = Preamble(client_identity, ke1, server_identity, ike2)
 
-  dh1 = SerializeElement(server_private_keyshare * ke1.client_keyshare)
-  dh2 = SerializeElement(server_private_key * ke1.client_keyshare)
+  dh1 = SerializeElement(server_private_keyshare * ke1.auth_request.client_keyshare)
+  dh2 = SerializeElement(server_private_key * ke1.auth_request.client_keyshare)
   dh3 = SerializeElement(server_private_keyshare * client_public_key)
   ikm = concat(dh1, dh2, dh3)
 
@@ -3744,7 +3713,8 @@ preamble = concat("HMQV",
                   KE1,
                   I2OSP(len(server_identity), 2), server_identity,
                   KE2.credential_response,
-                  KE2.AuthResponse.server_nonce, KE2.AuthResponse.server_keyshare)
+                  KE2.auth_response.server_nonce,
+                  KE2.auth_response.server_keyshare)
 </pre><a href="#appendix-C.1-2" class="pilcrow">¶</a>
 </div>
 <p id="appendix-C.1-3">Second, the IKM derivation would change. Assuming HMQV is instantiated with a cyclic
