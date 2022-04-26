@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2022-04-24T01:40:04.997594+00:00",
+  "timestamp": "2022-04-26T01:53:35.738194+00:00",
   "repo": "cfrg/draft-irtf-cfrg-opaque",
   "labels": [
     {
@@ -27205,24 +27205,26 @@
       "id": "PR_kwDOD79ejs42aLQ-",
       "title": "Removing AKE deps section and defining KE1/KE2/KE3 structs",
       "url": "https://github.com/cfrg/draft-irtf-cfrg-opaque/pull/352",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "kevinlewi",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "As discussed offline, this will remove the \"Authenticated Key Exchange (AKE) Protocol\" subsection from the \"Cryptographic Dependencies\" section. This also means removing the definitions of the subroutines \"AuthInit\", \"AuthResponse\", \"AuthFinish\".\r\n\r\nThis is also an opportunity to clearly define the structs KE1, KE2, and KE3 in the \"AKE Messages\" section.\r\n\r\nPartially addresses #336, but I think in order to complete #336, we should also re-order the sections in the Online AKE stage slightly, so that we aren't at any point referencing things that haven't yet been defined. This means moving the \"Credential Retrieval\" subsection up top, followed by \"AKE messages\", followed by \"Client Authentication Functions\" and \"Server Authentication Functions\". Not addressing this reordering in this PR, but will do so in a follow-up one.",
       "createdAt": "2022-04-19T09:07:25Z",
-      "updatedAt": "2022-04-22T02:54:29Z",
+      "updatedAt": "2022-04-26T01:38:16Z",
       "baseRepository": "cfrg/draft-irtf-cfrg-opaque",
       "baseRefName": "master",
       "baseRefOid": "fa2c17dd13ddd3d4e97d32b98e84d846361d90b4",
       "headRepository": "kevinlewi/draft-irtf-cfrg-opaque",
       "headRefName": "remove_ake_deps",
       "headRefOid": "85a79949c580574f1b3187b99808f12655b5ed53",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "closedAt": "2022-04-26T01:38:16Z",
+      "mergedAt": "2022-04-26T01:38:16Z",
+      "mergedBy": "chris-wood",
+      "mergeCommit": {
+        "oid": "3977e9ae3a911144a90271ce84cad72b6945a8a2"
+      },
       "comments": [
         {
           "author": "chris-wood",
@@ -27251,6 +27253,13 @@
           "body": "> I understand that it's editorial, but I'm asking if the new names and types match that which we use in the reference implementation.\r\n\r\nAh I see. Yes, just checked the poc/ directory, and there was no mention of AuthInit/AuthResponse/AuthFinish previously (since we referred to their parameters directly in the ref implementation), so I don't believe anything needs to change there. Thanks for the clarification! :)",
           "createdAt": "2022-04-22T02:42:21Z",
           "updatedAt": "2022-04-22T02:42:21Z"
+        },
+        {
+          "author": "kevinlewi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "@chris-wood -- this should be ready to merge!",
+          "createdAt": "2022-04-26T00:32:12Z",
+          "updatedAt": "2022-04-26T00:32:12Z"
         }
       ],
       "reviews": [
@@ -27343,6 +27352,32 @@
               "updatedAt": "2022-04-20T13:55:25Z"
             }
           ]
+        },
+        {
+          "id": "PRR_kwDOD79ejs44sthC",
+          "commit": {
+            "abbreviatedOid": "85a7994"
+          },
+          "author": "bytemare",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2022-04-24T20:11:40Z",
+          "updatedAt": "2022-04-24T20:11:40Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOD79ejs44x-mm",
+          "commit": {
+            "abbreviatedOid": "85a7994"
+          },
+          "author": "chris-wood",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2022-04-26T01:38:11Z",
+          "updatedAt": "2022-04-26T01:38:11Z",
+          "comments": []
         }
       ]
     }
